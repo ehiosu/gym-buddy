@@ -1,6 +1,14 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { ConvexClientProvider } from "@/Providers/ConvexClientProvider";
+import { ConvexAuthNextjsServerProvider } from "@convex-dev/auth/nextjs/server";
+import { AuthModal } from "@/features/auth/components/AuthModal";
+import { Toaster } from "@/components/ui/sonner";
+import { CreateRoutineModal } from "@/features/routines/components/create-routine-modal";
+import { CreateGoalDialog } from "@/features/goals/components/create-goal-dialog";
+import { AddRecordModal } from "@/features/goals/components/add-record-modal";
+import { CreateDietModal } from "@/features/diet/components/create-diet-modal";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,12 +31,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    <ConvexAuthNextjsServerProvider>
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <ConvexClientProvider>
+          <AuthModal/>
+          <CreateRoutineModal/>
+          <CreateGoalDialog/>
+          <AddRecordModal/>
+          <CreateDietModal/>
+          <Toaster position={"top-center"} closeButton />
+          {children}
+          </ConvexClientProvider>
       </body>
     </html>
+    </ConvexAuthNextjsServerProvider>
   );
 }
