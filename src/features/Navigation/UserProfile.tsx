@@ -12,12 +12,13 @@ import { useAuthActions } from "@convex-dev/auth/react";
 
 export const UserProfile = () => {
   const { user, isLoading, } = useCurrentUser();
+    const { signOut } = useAuthActions();
+
   if (isLoading) {
     return <Skeleton className="w-32 h-12 rounded-lg " />;
   }
   if (user) {
     const { name, email, image } = user;
-    const { signOut } = useAuthActions();
 
     const handleSignout = () => {
       signOut();

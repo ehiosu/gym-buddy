@@ -6,7 +6,7 @@ import { GoalSetupModal } from "./goal-setup";
 export const CreateGoalDialog = () => {
 const { isOpen, setModalType,modalType } = useModalStore();
 return(
-    <Dialog open={isOpen||modalType==="create-goal"} onOpenChange={(open)=>setModalType(isOpen?"create-goal":open?"create-goal":null)}>
+    <Dialog open={isOpen&&modalType==="create-goal"||modalType==="create-goal"} onOpenChange={(open)=>setModalType(isOpen?"create-goal":open?"create-goal":null)}>
     <GoalSetupModal/>
 </Dialog>
 )

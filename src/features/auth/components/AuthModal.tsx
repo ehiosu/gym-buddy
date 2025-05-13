@@ -40,9 +40,7 @@ export const AuthModal = () => {
          }).finally(()=>{
             setIsAuthenticating(false);
          })
-       }catch(error){
-
-        
+       }catch{
         setError("An error occurred")
         setIsAuthenticating(false);
        }

@@ -1,17 +1,19 @@
 import { useQuery } from "convex/react";
-
+import {motion} from "framer-motion"
 import {
-    ChartAreaIcon,
   DropletIcon,
   DumbbellIcon,
+  Edit2,
   FootprintsIcon,
   MoonIcon,
-  PencilIcon,
-  PlusCircleIcon,
+  Plus,
   ScaleIcon,
 } from "lucide-react";
 import { api } from "../../../../convex/_generated/api";
 import useModalStore from "@/features/store/modalStore";
+import { Doc } from "../../../../convex/_generated/dataModel";
+
+
 const trackableGoals = [
     { id: 'weight', name: 'Weight', unit: 'kg', icon: <ScaleIcon />,color: "bg-blue-100 text-blue-800", },
     { id: 'water', name: 'Water', unit: 'L', icon: <DropletIcon /> ,
@@ -37,208 +39,141 @@ export function GoalsGrid() {
 
   console.log({ goals });
   // Available goal types with color accents
-  const goalTypes = [
-    {
-      id: "weight",
-      name: "Weight",
-      unit: "kg",
-      icon: <ScaleIcon className="w-5 h-5" />,
-      color: "bg-blue-100 text-blue-800",
-    },
-    {
-      id: "sessions",
-      name: "Weekly Sessions",
-      unit: "sessions",
-      icon: <DumbbellIcon className="w-5 h-5" />,
-      color: "bg-purple-100 text-purple-800",
-    },
-    {
-      id: "water",
-      name: "Water Intake",
-      unit: "L",
-      icon: <DropletIcon className="w-5 h-5" />,
-      color: "bg-cyan-100 text-cyan-800",
-    },
-    {
-      id: "sleep",
-      name: "Sleep",
-      unit: "hours",
-      icon: <MoonIcon className="w-5 h-5" />,
-      color: "bg-indigo-100 text-indigo-800",
-    },
-    {
-      id: "steps",
-      name: "Daily Steps",
-      unit: "steps",
-      icon: <FootprintsIcon className="w-5 h-5" />,
-      color: "bg-green-100 text-green-800",
-    },
-  ];
+  // const goalTypes = [
+  //   {
+  //     id: "weight",
+  //     name: "Weight",
+  //     unit: "kg",
+  //     icon: <ScaleIcon className="w-5 h-5" />,
+  //     color: "bg-blue-100 text-blue-800",
+  //   },
+  //   {
+  //     id: "sessions",
+  //     name: "Weekly Sessions",
+  //     unit: "sessions",
+  //     icon: <DumbbellIcon className="w-5 h-5" />,
+  //     color: "bg-purple-100 text-purple-800",
+  //   },
+  //   {
+  //     id: "water",
+  //     name: "Water Intake",
+  //     unit: "L",
+  //     icon: <DropletIcon className="w-5 h-5" />,
+  //     color: "bg-cyan-100 text-cyan-800",
+  //   },
+  //   {
+  //     id: "sleep",
+  //     name: "Sleep",
+  //     unit: "hours",
+  //     icon: <MoonIcon className="w-5 h-5" />,
+  //     color: "bg-indigo-100 text-indigo-800",
+  //   },
+  //   {
+  //     id: "steps",
+  //     name: "Daily Steps",
+  //     unit: "steps",
+  //     icon: <FootprintsIcon className="w-5 h-5" />,
+  //     color: "bg-green-100 text-green-800",
+  //   },
+  // ];
 
-  return (
-    <div className="space-y-4 ">
-      <div className="flex items-center justify-between max-w-[100dvw]" >
-        <h2 className="text-xl font-bold">Your Goals</h2>
+ return (
+    <div className="bg-gray-900 rounded-xl border border-gray-800 p-6">
+      <div className="flex items-center justify-between mb-6">
+        <h2 className="text-2xl font-bold text-white">Your Goals</h2>
         <button
           onClick={() => setModalType("create-goal")}
-          className="flex items-center gap-2 text-sm text-gray-600 hover:text-black"
+          className="flex items-center gap-2 text-orange-400 hover:text-orange-500 transition-colors"
         >
-          <PlusCircleIcon className="w-4 h-4" />
+          <Plus className="w-4 h-4" />
           <span>Add Goal</span>
         </button>
       </div>
 
-      <div className="flex overflow-x-auto scrollbar-thin-minimal max-w-[100dvw]  -mx-1 px-4 pb-10 lg:px-1 gap-3 ">
-        
-        {trackableGoals.map((goal) => {
-          if (!goals?.activeGoals.includes(goal.id)) return null;
-
-          const goalData = goals[goal.id as keyof typeof goals] as
-            | { initial: number; current: number; target: number }
-            | undefined;
-          const progress =
-            goalData?.current && goalData?.target
-              ? Math.min(
-                  Math.round(
-                    ((goalData.current - goalData.initial) / goalData.target) *
-                      100
-                  )
-                )
-              : 0;
+      <div className="flex overflow-x-auto  gap-4 scrollbar-thin py-4">
+        {[...trackableGoals, ...visualGoals].map((goal) => {
+          if (!goals?.activeGoals.includes(goal.id)) return null
+          //eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const goalData = goals[goal.id as keyof Doc<"goals">] as {initial:number,current:number,target:number}
+          const progress = goalData && goalData.target 
+            ? Math.min(Math.round(((goalData.current - goalData.initial) / (goalData.target - goalData.initial)) * 100), 100)
+            : 0
 
           return (
-            <div
+            <motion.div
               key={goal.id}
-              className="bg-white rounded-lg shadow-sm p-4  flex-shrink-0 w-92  full border border-gray-100 hover:shadow-md transition-shadow"
+              whileHover={{ y: -5 }}
+              className="flex-shrink-0 w-64 bg-gray-800 rounded-xl border border-gray-700 hover:border-orange-500/30 p-4 transition-colors"
             >
               <div className="flex items-start justify-between">
-                <div className={`${goal.color} p-2 rounded-lg`}>
+                <div className={`${goal.color} p-2 rounded-lg text-lg`}>
                   {goal.icon}
                 </div>
                 <button
                   onClick={() => setModalType("add-goal-record")}
-                  className="text-gray-400 hover:text-gray-600"
+                  className="text-gray-400 hover:text-orange-500 transition-colors"
                 >
-                  <PencilIcon className="w-4 h-4" />
+                  <Edit2 className="w-4 h-4" />
                 </button>
               </div>
 
-              <h3 className="font-semibold mt-3">{goal.name}</h3>
+              <h3 className="font-semibold mt-3 text-white">{goal.name}</h3>
 
               <div className="mt-4 space-y-2">
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-500">Progress</span>
-                  <span className="font-medium">{progress}%</span>
+                  <span className="text-gray-400">Progress</span>
+                  <span className="font-medium text-white">{progress}%</span>
                 </div>
-                <div className="w-full bg-gray-100 rounded-full h-2">
+                <div className="w-full bg-gray-700 rounded-full h-2">
                   <div
-                    className={`h-2 rounded-full ${goal.color.split(" ")[0]}`}
+                    className={`h-2 rounded-full ${goal.color.split(' ')[0]}`}
                     style={{ width: `${progress}%` }}
                   ></div>
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-2 mt-4 text-sm">
+              <div className="grid grid-cols-2 gap-3 mt-4 text-sm">
                 <div>
-                  <p className="text-gray-500">Current</p>
-                  <p className="font-medium">
-                    {goalData?.current || "--"} {goal.unit}
+                  <p className="text-gray-400">Current</p>
+                  <p className="font-medium text-white">
+                    {goalData?.current || '--'} {goal.unit}
                   </p>
                 </div>
                 <div>
-                  <p className="text-gray-500">Target</p>
-                  <p className="font-medium">
-                    {goalData?.target || "--"} {goal.unit}
+                  <p className="text-gray-400">Target</p>
+                  <p className="font-medium text-white">
+                    {goalData?.target || '--'} {goal.unit}
                   </p>
                 </div>
               </div>
-              <button
-                 onClick={() => setModalType("add-goal-record")}
-                className="mt-3 w-full text-sm py-1.5 cursor-pointer bg-gray-50 hover:bg-gray-100 rounded border border-gray-200 transition-colors"
-              >
-                + Add Today's Record
-              </button>
-            </div>
-          );
-        })}
-        {visualGoals.map((goal) => {
-          if (!goals?.activeGoals.includes(goal.id)) return null;
 
-          const goalData = goals[goal.id as keyof typeof goals] as
-            | { initial: number; current: number; target: number }
-            | undefined;
-          const progress =
-            goalData?.current && goalData?.target
-              ? Math.min(
-                  Math.round(
-                    ((goalData.current - goalData.initial) / goalData.target) *
-                      100
-                  )
-                )
-              : 0;
-
-          return (
-            <div
-              key={goal.id}
-              className="bg-white rounded-lg shadow-sm p-4  flex-shrink-0 w-92  max-w-full border border-gray-100 hover:shadow-md transition-shadow"
-            >
-              <div className="flex items-start justify-between">
-                <div className={`${goal.color} p-2 rounded-lg`}>
-                  {goal.icon}
-                </div>
+              {trackableGoals.some(g => g.id === goal.id) && (
                 <button
                   onClick={() => setModalType("add-goal-record")}
-                  className="text-gray-400 hover:text-gray-600"
+                  className="mt-4 w-full text-sm py-2 bg-gray-700 hover:bg-gray-600 rounded-lg border border-gray-600 text-white transition-colors"
                 >
-                  <PencilIcon className="w-4 h-4" />
+                  + Add Today&apos;s Record
                 </button>
-              </div>
-
-              <h3 className="font-semibold mt-3">{goal.name}</h3>
-
-              <div className="mt-4 space-y-2">
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-500">Progress</span>
-                  <span className="font-medium">{progress}%</span>
-                </div>
-                <div className="w-full bg-gray-100 rounded-full h-2">
-                  <div
-                    className={`h-2 rounded-full ${goal.color.split(" ")[0]}`}
-                    style={{ width: `${progress}%` }}
-                  ></div>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-2 mt-4 text-sm">
-                <div>
-                  <p className="text-gray-500">Current</p>
-                  <p className="font-medium">
-                    {goalData?.current || "--"} {goal.unit}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-gray-500">Target</p>
-                  <p className="font-medium">
-                    {goalData?.target || "--"} {goal.unit}
-                  </p>
-                </div>
-              </div>
-            
-            </div>
-          );
+              )}
+            </motion.div>
+          )
         })}
 
-        {/* Add New Goal Card
-              <div 
-                  onClick={() => setModalType("create-goal")}
-                  className="bg-white rounded-lg border-2 border-dashed border-gray-300 hover:border-gray-400 flex flex-col items-center justify-center cursor-pointer transition-colors min-h-[180px]"
-              >
-                  <PlusCircleIcon className="w-8 h-8 text-gray-400 mb-2" />
-                  <span className="text-gray-600">Create Goal</span>
-              </div> */}
+        {/* Add New Goal Card */}
+        <motion.div
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          onClick={() => setModalType("create-goal")}
+          className="flex-shrink-0 w-64 min-h-60  flex flex-col items-center justify-center bg-gray-800 rounded-xl border-2 border-dashed border-gray-700 hover:border-orange-500 cursor-pointer transition-colors"
+        >
+          <div className="p-3 rounded-full bg-gray-700 text-gray-400 mb-3">
+            <Plus className="w-5 h-5" />
+          </div>
+          <span className="text-gray-400">Create New Goal</span>
+        </motion.div>
       </div>
     </div>
-  );
+  )
 }
 
 //   function GoalEditForm({ current, target, unit, onSave, onCancel }) {

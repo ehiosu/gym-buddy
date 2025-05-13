@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ConvexClientProvider } from "@/Providers/ConvexClientProvider";
 import { ConvexAuthNextjsServerProvider } from "@convex-dev/auth/nextjs/server";
-import { AuthModal } from "@/features/auth/components/AuthModal";
+// import { AuthModal } from "@/features/auth/components/AuthModal";
 import { Toaster } from "@/components/ui/sonner";
 import { CreateRoutineModal } from "@/features/routines/components/create-routine-modal";
 import { CreateGoalDialog } from "@/features/goals/components/create-goal-dialog";
@@ -37,7 +37,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ConvexClientProvider>
-          <AuthModal/>
+          {/* <AuthModal/> */}
           <CreateRoutineModal/>
           <CreateGoalDialog/>
           <AddRecordModal/>

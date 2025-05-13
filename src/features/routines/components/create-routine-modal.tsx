@@ -1,8 +1,7 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+
+import { Dialog, DialogContent,  } from "@/components/ui/dialog"
+import {motion} from "framer-motion"
 import { Slider } from "@/components/ui/slider";
 import useModalStore from "@/features/store/modalStore"
 import { useState } from "react";
@@ -50,7 +49,7 @@ function RoutineForm() {
             planDuration,  
             name
         }).then(()=>{
-            setIsOpen(false),
+            setIsOpen(false);
             setModalType(null)
         }),{
             loading:"Creating your routine...",
@@ -63,131 +62,159 @@ function RoutineForm() {
     }
   
     return (
-        <DialogContent className="bg-white text-black border border-gray-300 rounded-xl p-6 max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle className="text-2xl text-black">Create Routine</DialogTitle>
-          <DialogDescription className="text-gray-600">
-            Create a new routine by filling out the form below.
-          </DialogDescription>
-        </DialogHeader>
-        <div className="mt-4">
-          <Label className="mb-1 block">Routine Name</Label>
-          <Input
+         <DialogContent className="bg-gray-900 border border-gray-800 rounded-xl p-6 max-w-md w-full max-h-[90vh] overflow-y-auto">
+      <div className="border-b border-gray-800 pb-4 mb-4">
+        <h2 className="text-2xl font-bold text-white">Create Routine</h2>
+        <p className="text-gray-400 mt-1">
+          Create a new routine by filling out the form below.
+        </p>
+      </div>
+
+      <div className="space-y-5">
+        {/* Routine Name */}
+        <div>
+          <label className="block text-sm font-medium text-gray-400 mb-1">Routine Name</label>
+          <input
             value={name}
             required
             onChange={e => setName(e.target.value)}
-            placeholder="e.g. Summer body loadingg"
-            className="bg-white border border-gray-300 text-black placeholder-gray-400"
+            placeholder="e.g. Summer body loading"
+            className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500"
           />
-          <p className="text-sm text-gray-500 mt-1">What's the name of your super awesome routine?</p>
+          <p className="text-xs text-gray-500 mt-1">What&apos;s the name of your super awesome routine?</p>
         </div>
+
         {/* Goal */}
-        <div className="mt-4">
-          <Label className="mb-1 block">Goal</Label>
-          <Input
+        <div>
+          <label className="block text-sm font-medium text-gray-400 mb-1">Goal</label>
+          <input
             value={goal}
             required
             onChange={e => setGoal(e.target.value)}
             placeholder="e.g. Build muscle, lose fat, improve cardio"
-            className="bg-white border border-gray-300 text-black placeholder-gray-400"
+            className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500"
           />
-          <p className="text-sm text-gray-500 mt-1">State your primary fitness goal clearly.</p>
+          <p className="text-xs text-gray-500 mt-1">State your primary fitness goal clearly.</p>
         </div>
-  
+
         {/* Fitness Level */}
-        <div className="mt-4">
-          <Label className="mb-1 block">Fitness Level</Label>
+        <div>
+          <label className="block text-sm font-medium text-gray-400 mb-2">Fitness Level</label>
           <div className="flex gap-2">
-            {levels.map(l => (
-              <Button
-                key={l}
-                variant="outline"
-                onClick={() => setFitnessLevel(l)}
-                className={`rounded-md text-sm px-4 py-2 border ${
-                  fitnessLevel === l ? "bg-black text-white" : "text-black border-gray-300"
+            {levels.map(level => (
+              <motion.button
+                key={level}
+                type="button"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => setFitnessLevel(level)}
+                className={`text-sm px-4 py-2 rounded-lg border transition-colors ${
+                  fitnessLevel === level
+                    ? 'bg-orange-500 border-orange-500 text-white'
+                    : 'border-gray-700 text-gray-300 hover:bg-gray-800'
                 }`}
               >
-                {l}
-              </Button>
+                {level}
+              </motion.button>
             ))}
           </div>
         </div>
-  
+
         {/* Preferences */}
-        <div className="mt-4">
-          <Label className="mb-1 block">Training Preferences</Label>
-          <Input
+        <div>
+          <label className="block text-sm font-medium text-gray-400 mb-1">Training Preferences</label>
+          <input
             value={preferences}
             onChange={e => setPreferences(e.target.value)}
             placeholder="e.g. Home training, bodyweight, cardio, weights"
-            className="bg-white border border-gray-300 text-black placeholder-gray-400"
+            className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500"
           />
-          <p className="text-sm text-gray-500 mt-1">List any training styles or equipment you prefer.</p>
+          <p className="text-xs text-gray-500 mt-1">List any training styles or equipment you prefer.</p>
         </div>
-  
+
         {/* Health Conditions */}
-        <div className="mt-4">
-          <Label className="mb-1 block">Health Conditions</Label>
-          <div className="flex flex-wrap gap-2 mt-1">
-            {conditions.map(c => (
-              <Button
-                key={c}
-                variant="outline"
-                className={`rounded-full text-sm px-4 py-1 border ${
-                  healthConditions.includes(c) ? "bg-black text-white" : "text-black border-gray-300"
+        <div>
+          <label className="block text-sm font-medium text-gray-400 mb-2">Health Conditions</label>
+          <div className="flex flex-wrap gap-2">
+            {conditions.map(condition => (
+              <motion.button
+                key={condition}
+                type="button"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => toggleSelect(condition)}
+                className={`text-xs px-3 py-1 rounded-full border transition-colors ${
+                  healthConditions.includes(condition)
+                    ? 'bg-orange-500/20 border-orange-500 text-orange-500'
+                    : 'border-gray-700 text-gray-300 hover:bg-gray-800'
                 }`}
-                onClick={() => toggleSelect(c)}
               >
-                {c}
-              </Button>
+                {condition}
+              </motion.button>
             ))}
           </div>
         </div>
-  
+
         {/* Days per Week */}
-        <div className="mt-6">
-          <Label className="mb-2 block">Days per Week: {daysPerWeek}</Label>
+        <div>
+          <div className="flex justify-between items-center mb-2">
+            <label className="block text-sm font-medium text-gray-400">Days per Week</label>
+            <span className="text-sm text-orange-500">{daysPerWeek}</span>
+          </div>
           <Slider
             min={1}
             max={7}
             step={1}
-            defaultValue={[daysPerWeek]}
+            value={[daysPerWeek]}
             onValueChange={([val]) => setDaysPerWeek(val)}
-            className="text-black"
+            className="[&_.slider-range]:bg-orange-500 [&_.slider-thumb]:border-orange-500"
           />
         </div>
-  
+
         {/* Session Duration */}
-        <div className="mt-4">
-          <Label className="mb-2 block">Session Duration (minutes): {sessionDuration}</Label>
+        <div>
+          <div className="flex justify-between items-center mb-2">
+            <label className="block text-sm font-medium text-gray-400">Session Duration (minutes)</label>
+            <span className="text-sm text-orange-500">{sessionDuration}</span>
+          </div>
           <Slider
             min={15}
             max={120}
             step={5}
-            defaultValue={[sessionDuration]}
+            value={[sessionDuration]}
             onValueChange={([val]) => setSessionDuration(val)}
-            className="text-black"
+            className="[&_.slider-range]:bg-orange-500 [&_.slider-thumb]:border-orange-500"
           />
         </div>
-  
+
         {/* Plan Duration */}
-        <div className="mt-4">
-          <Label className="mb-1 block">Plan Duration (weeks)</Label>
-          <Input
+        <div>
+          <label className="block text-sm font-medium text-gray-400 mb-1">Plan Duration (weeks)</label>
+          <input
             type="number"
             min={1}
             value={planDuration}
             onChange={e => setPlanDuration(Number(e.target.value))}
-            className="bg-white border border-gray-300 text-black"
+            className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-orange-500"
           />
         </div>
-  
-        {/* Submit */}
-        <div className="mt-6 flex justify-end">
-          <Button onClick={()=>{handleCreateRoutine()}} disabled={!goal || !preferences} className="bg-black text-white hover:bg-gray-800 px-6 py-2 rounded-md">
+
+        {/* Submit Button */}
+        <div className="pt-4">
+          <motion.button
+            type="button"
+            onClick={handleCreateRoutine}
+            disabled={!goal || !preferences}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className={`w-full py-2.5 rounded-lg font-medium bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:from-orange-600 hover:to-orange-700 ${
+              (!goal || !preferences) ? 'opacity-50 cursor-not-allowed' : ''
+            }`}
+          >
             Generate Plan
-          </Button>
+          </motion.button>
         </div>
-      </DialogContent>
+      </div>
+    </DialogContent>
     )
   }

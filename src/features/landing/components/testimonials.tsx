@@ -66,7 +66,7 @@ export default function Testimonials() {
                   <p className="text-gray-400 text-sm">{testimonial.role}</p>
                 </div>
               </div>
-              <p className="text-gray-300 mb-6">"{testimonial.content}"</p>
+              <p className="text-gray-300 mb-6">&quot;{testimonial.content}&quot;</p>
               <div className="flex">
                 {[...Array(testimonial.rating)].map((_, i) => (
                   <svg key={i} className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">

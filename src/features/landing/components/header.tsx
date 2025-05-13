@@ -24,12 +24,12 @@ export default function Header() {
           </nav>
           
           <div className="flex items-center space-x-4">
-            <button className="hidden md:block px-4 py-2 text-sm font-medium text-gray-300 hover:text-white transition-all hover:scale-105">
+            <Link href={"/auth/signin"} className="hidden md:block px-4 py-2 text-sm font-medium text-gray-300 hover:text-white transition-all hover:scale-105">
               Log In
-            </button>
-            <button className="px-4 py-2 text-sm font-medium bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg hover:from-orange-600 hover:to-orange-700 transition-all hover:scale-105 shadow-lg shadow-orange-500/20">
+            </Link>
+            <Link href={"/auth/signup"} className="px-4 py-2 text-sm font-medium bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg hover:from-orange-600 hover:to-orange-700 transition-all hover:scale-105 shadow-lg shadow-orange-500/20">
               Get Started
-            </button>
+            </Link>
             
             {/* Mobile menu button */}
             <button 
