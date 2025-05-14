@@ -23,7 +23,7 @@ export const useCreateDiet =  () => {
       const options = {
         method: "POST",
         headers: {
-          "x-rapidapi-key":process.env.RAPIDAPI_KEY!,
+          "x-rapidapi-key":process.env.NEXT_PUBLIC_RAPIDAPI_KEY!,
           "x-rapidapi-host":
             "ai-workout-planner-exercise-fitness-nutrition-guide.p.rapidapi.com",
           "Content-Type": "application/json",
