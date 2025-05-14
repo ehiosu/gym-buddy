@@ -54,9 +54,9 @@ export default function Testimonials() {
               className="glass p-8 rounded-2xl border border-white/10 hover:border-orange-500/30 transition-all"
             >
               <div className="flex items-center mb-6">
-                <div className="w-14 h-14 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center text-xl font-bold mr-4">
+                <div className="w-14 h-14 rounded-full  bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center text-xl font-bold mr-4">
                   {testimonial.avatar ? (
-                    <img src={testimonial.avatar} alt={testimonial.name} className="w-full h-full rounded-full object-cover" />
+                    <img src={testimonial.avatar} alt={""} className="w-full h-full rounded-full object-cover" />
                   ) : (
                     testimonial.name.charAt(0)
                   )}
