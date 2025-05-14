@@ -36,18 +36,18 @@ export const metadata = {
     "personalized workouts",
     "nutrition plan",
   ],
-  authors: [{ name: "Your Name", url: "https://yourportfolio.com" }],
-  creator: "Your Name",
+  authors: [{ name: "Umar Abdulmalik", }],
+  creator: "Umar Abudlmalik",
   themeColor: "#0f172a", // Tailwind slate-900, adjust as needed
   openGraph: {
     title: "Gym Buddy – AI Fitness Planner",
     description:
       "An AI-powered app that creates custom workouts and diet plans to help you meet your fitness goals.",
-    url: "https://gymbuddy.yoursite.com",
+    url: "https://your-gymbuddy.netlify.app/",
     siteName: "Gym Buddy",
     images: [
       {
-        url: "https://gymbuddy.yoursite.com/og-image.png", // Replace with your image
+        url: "https://your-gymbuddy.netlify.app/gym-buddy-logo.png", // Replace with your image
         width: 1200,
         height: 630,
         alt: "Gym Buddy App Preview",
@@ -61,7 +61,7 @@ export const metadata = {
     title: "Gym Buddy – AI Fitness Planner",
     description:
       "AI-generated workouts and nutrition plans tailored to your goals. Built with Next.js and Convex.",
-    images: ["https://your-gymbuddy.vercel.app/android-chrome-512x512.png"], // Same image as OpenGraph
+    images: ["https://your-gymbuddy.netlify.app/gym-buddy-logo.png"], // Same image as OpenGraph
     creator: "@yourhandle",
   },
   icons: {
