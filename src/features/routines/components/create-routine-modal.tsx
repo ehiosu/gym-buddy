@@ -25,7 +25,7 @@ function RoutineForm() {
     const [daysPerWeek, setDaysPerWeek] = useState<number>(4)
     const [sessionDuration, setSessionDuration] = useState<number>(60)
     const [planDuration, setPlanDuration] = useState<number>(4)
-  
+    const [isCreatingRoutine,setIsCreatingRoutine]=useState<boolean>(false);
     const levels = ["Beginner", "Intermediate", "Advanced"]
     const conditions = ["None", "Back pain", "Joint issues", "Asthma"]
     const {setIsOpen,setModalType}=useModalStore()
@@ -39,6 +39,7 @@ function RoutineForm() {
     }
     const {createNewRoutine}= useCreateRoutine()
     const handleCreateRoutine = () => {
+      setIsCreatingRoutine(true);
         toast.promise(createNewRoutine({
             goal,
             fitnessLevel,
@@ -51,6 +52,8 @@ function RoutineForm() {
         }).then(()=>{
             setIsOpen(false);
             setModalType(null)
+        }).finally(()=>{
+          setIsCreatingRoutine(false);
         }),{
             loading:"Creating your routine...",
             success:"Your routine has been created!",
@@ -203,8 +206,9 @@ function RoutineForm() {
         <div className="pt-4">
           <motion.button
             type="button"
+            
             onClick={handleCreateRoutine}
-            disabled={!goal || !preferences}
+            disabled={!goal || !preferences||isCreatingRoutine}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             className={`w-full py-2.5 rounded-lg font-medium bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:from-orange-600 hover:to-orange-700 ${
