@@ -235,7 +235,7 @@ export const Schedule = ({ isMobile = false }) => {
                             <div className="w-10 text-sm font-medium text-gray-400">
                               Set {setIndex + 1}
                             </div>
-                            <div className="ml-2 flex-1 h-8 bg-gray-700 rounded-md flex items-center px-3">
+                            <div className="ml-2 flex-1 py-1.5 min-h-8 bg-gray-700 rounded-md flex items-center px-3">
                               <span className="text-sm text-gray-300">
                                 {exercise.repetitions !== "N/A" 
                                   ? `${exercise.repetitions} reps` 

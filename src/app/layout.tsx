@@ -9,6 +9,7 @@ import { CreateRoutineModal } from "@/features/routines/components/create-routin
 import { CreateGoalDialog } from "@/features/goals/components/create-goal-dialog";
 import { AddRecordModal } from "@/features/goals/components/add-record-modal";
 import { CreateDietModal } from "@/features/diet/components/create-diet-modal";
+import { Metadata } from "next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,7 +22,7 @@ const geistMono = Geist_Mono({
 });
 
 // app/layout.tsx or app/page.tsx
-export const metadata = {
+export const metadata:Metadata = {
   title: "Gym Buddy – AI Fitness Planner",
   description:
     "Gym Buddy is an AI-powered fitness app that generates personalized workout routines and diet plans. Track your fitness goals with ease using a smart, responsive interface.",
@@ -44,6 +45,7 @@ export const metadata = {
     description:
       "An AI-powered app that creates custom workouts and diet plans to help you meet your fitness goals.",
     url: "https://your-gymbuddy.netlify.app/",
+    
     siteName: "Gym Buddy",
     images: [
       {
