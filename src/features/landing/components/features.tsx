@@ -52,7 +52,7 @@ export default function Features() {
           className="mb-16 max-w-xl"
         >
           <p className="text-sm font-medium text-orange-500 uppercase tracking-widest mb-3">
-            What's inside
+            What%apos;s inside
           </p>
           <h2 className="text-4xl md:text-5xl font-bold leading-tight">
             Everything in one dashboard
